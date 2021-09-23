@@ -1,0 +1,99 @@
+#include<iostream>
+using namespace std;
+int max(int a[],int n)
+{
+	int i,j,t;
+	for(i=0;i<n-1;i++)
+	{
+		for(j=i;j<n;j++)
+		{
+			if(a[j]<a[i])
+			{
+				t=a[j];
+				a[j]=a[i];
+				a[i]=t;
+			}
+		}
+	}
+	return a[n-1];
+}
+struct Queue
+{
+	int a[10];
+	int l;
+}q;
+int main()
+{
+	int p,f,i,j,t,c1=0,k=0,o,b,x[10],h=-1,u;
+	cout<<"Enter Number of Pages:";cin>>p;
+	cout<<"Enter Number of Frames:";cin>>f;
+	int rs[p],r[f];
+	cout<<"Enter Reference String:";
+	for(i=0;i<p;i++)
+		cin>>rs[i];
+	t=0;q.l=0;
+	cout<<"------------------------------------------------\n";
+	for(i=0;i<f;i++)
+	{
+		q.a[i]=-1;
+		cout<<q.a[i]<<" ";
+    }
+cout<<"\n------------------------------------------------\n";
+	for(i=0;i<p;i++)
+	{
+		for(j=0;j<f;j++)
+		{
+			if(rs[i]==q.a[j])
+			{
+				c1++;k--;
+				break;
+			}
+		}
+		if(j==f)
+		{
+			if(q.l!=f)
+				q.a[q.l++]=rs[i];
+			else
+			{
+				for(o=0;o<f;)
+				{
+					for(b=i;b<p;b++)
+					{
+						if(q.a[o]==rs[b])
+						{
+							x[o++]=b;
+							break;
+						}	
+					}
+					if(b==p)
+					{
+						x[o++]=100;
+						b=i;
+					}
+				}
+				for(b=0;b<f;b++)
+					r[b]=x[b];
+				u=max(x,f);
+				for(o=0;o<f;o++)
+				{
+					if(r[o]==u)
+					break;
+				}
+				t=o;
+				q.a[t]=rs[i];
+			}	
+		}
+		for(j=0;j<f;j++)
+			cout<<q.a[j]<<" ";
+		if(h!=k)
+			cout<<"Page fault :"<<k+1<<"\n";
+		else
+			cout<<"\n";
+		h=k++;
+		cout<<"------------------------------------------------\n";
+	}
+	cout<<"Number of page faults:"<<p-c1<<"\n";
+	cout<<"Hit Ratio:"<<c1<<"\n";
+	cout<<"Miss Ratio:"<<k<<"\n";
+	return 0;
+}
