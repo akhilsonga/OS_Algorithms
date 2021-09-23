@@ -1,0 +1,73 @@
+#include<iostream>
+#include<cstdlib>
+using namespace std;
+struct Queue
+{
+	int a[10];
+	int r;
+	int l;
+}q;
+int main()
+{
+	system("color 7c");
+	int np,nf,i,j,t,c1=0,c2=0,k=0;
+	cout<<"Enter Number of Pages:";
+	cin>>np;
+	cout<<"Enter Number of Frames:";
+	cin>>nf;
+	int rs[np],h=-1;
+	cout<<"Enter Reference String:";
+	for(i=0;i<np;i++)
+	cin>>rs[i];
+	q.r=0;
+	t=0;
+	q.l=0;
+	cout<<"------------------------------------------------\n";
+	for(i=0;i<nf;i++)
+	{
+	q.a[i]=-1;
+	cout<<q.a[i]<<" ";
+    }
+	cout<<"\n------------------------------------------------\n";
+	for(i=0;i<np;i++)
+	{
+		for(j=0;j<nf;j++)
+		{
+			if(rs[i]==q.a[j])
+			{
+				c1++;
+				k--;
+				break;
+			}
+		}
+		if(j==nf)
+		{
+			if(q.l!=nf)
+			{
+			q.a[q.l]=rs[i];
+	q.l++;
+			}
+		else
+		{
+			if(t!=q.l)
+			{		
+				q.a[t]=rs[i];
+				t++;
+			}
+			if(t==q.l)
+				t=0;
+		}	
+	}
+	for(j=0;j<nf;j++)
+		cout<<q.a[j]<<" ";
+	if(h!=k)
+		cout<<"Page fault :"<<k+1<<"\n";
+	else
+		cout<<"\n";
+	h=k;
+	k++;
+	cout<<"------------------------------------------------\n";
+	}
+	cout<<"Number of page faults:"<<np-c1<<"\n";
+	cout<<"Hit Ratio:"<<c1<<"\n";
+	cout<<"Miss Ratio:"<<k<<"\n";	return 0;} 
